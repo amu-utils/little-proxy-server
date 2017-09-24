@@ -1,23 +1,39 @@
-var express  = require('express');
-var app      = express();
+// install and save:
+// "compression": "^1.7.0",
+// "http-proxy": "^1.16.2",
 
-//app.use(compress());
+const express     = require('express');
+const compression = require('compression');
+const httpProxy   = require('http-proxy');
+const api         = require('./mock-server/api.js');
 
-var httpProxy = require('http-proxy');
-var apiProxy = httpProxy.createProxyServer();
+const app         = express();
+const proxy       = httpProxy.createProxyServer();
 
+const port        = 4000;
 
-app.all("*remote/**", function(req, res) {
-  console.log('remote server....');
-  res.status(200).send({});
+// Use Compression
+app.use(compression());
+
+api.create(app);
+
+/**
+ * Example
+ * Catch requests that begin with...
+ */
+app.use('/api/**', function(req, res, next) {
+  res.status(200).send({
+    'name': 'apiResponse'
+  });
 });
 
-
-
-app.all("**", function(req, res) {
-  //res.status(200).send({});
-  console.log('redirecting to angular cli');
-  apiProxy.web(req, res, {target: 'http://localhost:4200'});
+/**
+ * This will use the proxy server to route every remaining request to the file server
+ * Currently set to :4200 for angular / ember cli
+ */
+app.use('/', function(req, res, next) {
+  proxy.web(req, res, {target: 'http://localhost:4200'});
 });
 
-app.listen(4000);
+console.log('server started at :4000');
+app.listen(port);

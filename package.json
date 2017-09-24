@@ -1,0 +1,25 @@
+{
+  "name": "little-proxy-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "proxy-server.js",
+  "dependencies": {
+    "compression": "^1.7.0",
+    "http-proxy": "^1.16.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node proxy-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amu-utils/little-proxy-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amu-utils/little-proxy-server/issues"
+  },
+  "homepage": "https://github.com/amu-utils/little-proxy-server#readme"
+}
